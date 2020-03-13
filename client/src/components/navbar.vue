@@ -1,10 +1,10 @@
 <template>
   <div class="navbar">
     <a href="#">
-      <div class="nav-opt" @click.prevent="showEditprofile">Edit Profile</div>
+      <div class="nav-opt" @click.prevent="showEditProfile()">Edit Profile</div>
     </a>
     <a href="#">
-      <div class="nav-opt" @click.prevent="show" id="mid-text-navbar" >It's Kanban Card</div>
+      <div class="nav-opt" @click.prevent="backHome" id="mid-text-navbar" >It's Kanban Card</div>
     </a>
     <div class="signout">
       <a @click.prevent="signout()" href="#">signout</a>
@@ -33,8 +33,11 @@
             console.log('User signed out.');
             });
           },
-          showEditProfile(){
+          showEditProfile(id){
             this.$emit('isProfile', true)
+          },
+          backHome(){
+            this.$emit('isLogin', true)
           }
         }
     };

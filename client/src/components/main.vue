@@ -97,6 +97,7 @@
 import axios from "axios";
 import Add from "./add";
 import Edit from "./edit";
+import EditProfile from './editProfile'
 import Alert from "./alert";
 
 const url = "http://localhost:3000";
@@ -105,7 +106,8 @@ export default {
   components: {
     Add,
     Edit,
-    Alert
+    Alert,
+    EditProfile
   },
   data() {
     return {
@@ -121,6 +123,7 @@ export default {
       tasks4: [],
       isAdd: false,
       isEdit: false,
+      isProfile:false,
       isError: {
         status: false,
         msg: ""
@@ -142,6 +145,10 @@ export default {
     //   });
   },
   methods: {
+    afterprofile(payload){
+      this.isProfile = payload
+      this.getAll()
+    },
     afterAdd(payload) {
       this.isAdd = payload;
       this.getAll();

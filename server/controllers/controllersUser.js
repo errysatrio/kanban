@@ -17,27 +17,27 @@ class ControllerUser {
             idToken: req.body.token.id_token,
             audience: process.env.client_id,
         })
-        .then(ticket => {
-            payload = ticket.getPayload();
-            return User.findOne({where:{email:payload.email}})
-        }).then(data=>{
-            // console.log(data)
-            let {name, email} = payload
-            if(data){
-                return data
-            } else {
-                let password = randomPass()
-                return User.create({name, email, password})
-            }
-        })
-        .then(data =>{
-            const {id, name} = data
-            let access_token = sign({id,name}, process.env.jwt_secret)
-            res.status(200).json({access_token})
-        })
-        .catch(err => {
-            console.log(err)
-        })
+            .then(ticket => {
+                payload = ticket.getPayload();
+                return User.findOne({ where: { email: payload.email } })
+            }).then(data => {
+                // console.log(data)
+                let { name, email } = payload
+                if (data) {
+                    return data
+                } else {
+                    let password = randomPass()
+                    return User.create({ name, email, password })
+                }
+            })
+            .then(data => {
+                const { id, name } = data
+                let access_token = sign({ id, name }, process.env.jwt_secret)
+                res.status(200).json({ access_token })
+            })
+            .catch(err => {
+                console.log(err)
+            })
 
     }
     static register(req, res, next) {
@@ -75,16 +75,29 @@ class ControllerUser {
             })
     }
 
-    static editProfile(req,res,next){
-        const {email, name, password} = req.body
-        User.update({email,name,password})
-        .then(data =>{
-            console.log(data)
-            
-        })
-        .catch(err =>{
-            console.log(err)
-        })
+    static getOneUser(req, res, next) {
+        let id = req.params.id
+        User.findOne({ where: { id } })
+            .then(data => {
+                res.status(200).json(data)
+            })
+            .catch(err => {
+                next(err)
+            })
+    }
+
+    static editProfile(req, res, next) {
+        console.log(req.user)
+        let id = req.user.id
+        const { email, name, password } = req.body
+        User.update({ email, name, password }, { where: { id } })
+            .then(data => {
+                console.log(data)
+                // res.status(200).json({data})
+            })
+            .catch(err => {
+                next(err)
+            })
     }
 }
 module.exports = ControllerUser    

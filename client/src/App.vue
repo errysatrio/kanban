@@ -1,10 +1,11 @@
 <template>
   <div>
-    <Navbar v-if="isLogin" @isLogin="showLoginForm" ></Navbar>
+    <Navbar v-if="isLogin" @isLogin="showLoginForm" @isProfile="showEditProfile" ></Navbar>
     <Alert v-if="isError.status" ></Alert>
     <Login v-if="!isLogin && !isRegister" @isLogin="showLoginForm" @isRegister="showRegisterForm" ></Login>
+    <EditProfile v-else-if="isProfile" @isProfile="afterProfile"></EditProfile>
     <Register v-if="isRegister" @isRegister="showLoginForm"></Register>
-    <Main v-if="isLogin && !isEdit && !isAdd" @isAdd="showAddForm"></Main>
+    <Main v-if="!isProfile && isLogin && !isEdit && !isAdd" @isAdd="showAddForm"></Main>
     <footer>
       <p>ini seharusnya adalah footer</p>
     </footer>
@@ -17,6 +18,7 @@ import Alert from "../src/components/alert";
 import Login from "../src/components/login";
 import Register from "../src/components/register";
 import Main from "../src/components/main";
+import EditProfile from '../src/components/editProfile'
 
 const url = 'http://localhost:3000'
 
@@ -27,11 +29,12 @@ export default {
     Alert,
     Login,
     Register,
+    EditProfile,
     Main
   },
   data() {
     return {
-      isprofile:false,
+      isProfile:false,
         isRegister: false,
         isEdit: false,
         isAdd: false,
@@ -45,6 +48,10 @@ export default {
     }
   },
   methods: {
+    afterProfile(){
+      this.login = true
+      this.isProfile = false
+    },
     showEdit(id) {
       axios({
         url: `${this.url}/${id}`,
@@ -62,7 +69,12 @@ export default {
           this.isError.msg = err.msg.join("\n");
         });
     },
-    showMain(){
+    showEditProfile(){
+      this.isProfile = true
+      this.isRegister = false;
+      this.isLogin = true;
+      this.isEdit = false;
+      this.isAdd = false;
     },
     showAddForm() {
       this.isRegister = false;

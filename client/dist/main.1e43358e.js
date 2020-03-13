@@ -8925,8 +8925,11 @@ var _default = {
         console.log('User signed out.');
       });
     },
-    showEditProfile: function showEditProfile() {
+    showEditProfile: function showEditProfile(id) {
       this.$emit('isProfile', true);
+    },
+    backHome: function backHome() {
+      this.$emit('isLogin', true);
     }
   }
 };
@@ -8952,7 +8955,7 @@ exports.default = _default;
           on: {
             click: function($event) {
               $event.preventDefault()
-              return _vm.showEditprofile($event)
+              return _vm.showEditProfile()
             }
           }
         },
@@ -8969,7 +8972,7 @@ exports.default = _default;
           on: {
             click: function($event) {
               $event.preventDefault()
-              return _vm.show($event)
+              return _vm.backHome($event)
             }
           }
         },
@@ -10903,14 +10906,11 @@ var _default = {
           data: {
             token: google_token
           }
-        }).then(function (_ref) {
-          var data = _ref.data;
-          console.log(data, '<<<<<< data dari google');
+        }).then(function (data) {
           localStorage.setItem('access_token', data.data.access_token);
 
           _this.$emit('isLogin', true);
         }).catch(function (err) {
-          console.log('err');
           console.log(err);
         }); // console.log('user', google_token.access_token)
         // On success do something, refer to https://developers.google.com/api-client-library/javascript/reference/referencedocs#googleusergetid
@@ -11873,15 +11873,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
-//
-//
 var url = "http://localhost:3000";
 var _default = {
-  name: 'Edit',
+  name: "Edit",
   components: {
     Alert: _alert.default
   },
-  props: ['task'],
+  props: ["task"],
   data: function data() {
     return {
       isError: {
@@ -11896,7 +11894,7 @@ var _default = {
 
       (0, _axios.default)({
         url: "".concat(url, "/tasks/").concat(id),
-        method: 'put',
+        method: "put",
         headers: {
           access_token: localStorage.access_token
         },
@@ -11906,11 +11904,14 @@ var _default = {
           category: this.task.category
         }
       }).then(function (data) {
-        _this.$emit('editted', false);
+        _this.$emit("editted", false);
       }).catch(function (err) {
         _this.isError.status = true;
         _this.isError.msg = err.response.data.msg.join(" and ");
       });
+    },
+    cancel: function cancel() {
+      this.$emit('editted', false);
     }
   }
 };
@@ -12010,7 +12011,7 @@ exports.default = _default;
           )
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "chg-category" })
+        _c("button", { on: { click: _vm.cancel } }, [_vm._v("cancel")])
       ]),
       _vm._v(" "),
       _vm.isError.status
@@ -12078,6 +12079,302 @@ render._withStripped = true
       
       }
     })();
+},{"axios":"node_modules/axios/index.js","../components/alert":"src/components/alert.vue","_css_loader":"../../../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/editProfile.vue":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _axios = _interopRequireDefault(require("axios"));
+
+var _alert = _interopRequireDefault(require("../components/alert"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var url = 'http://localhost:3000';
+var _default = {
+  name: "Edit-Profile",
+  components: {
+    Alert: _alert.default
+  },
+  data: function data() {
+    return {
+      user: {
+        name: '',
+        email: '',
+        password: ''
+      },
+      isError: {
+        status: false,
+        msg: []
+      }
+    };
+  },
+  methods: {
+    cancel: function cancel() {
+      this.$emit('isProfile', false);
+    },
+    updateProfile: function updateProfile() {
+      var _this = this;
+
+      (0, _axios.default)({
+        url: "".concat(url, "/user"),
+        method: 'put',
+        headers: {
+          access_token: localStorage.access_token
+        },
+        data: {
+          name: this.user.name,
+          email: this.user.email,
+          password: this.user.password
+        }
+      }).then(function (data) {
+        _this.$emit('isProfile', false);
+      }).catch(function (err) {
+        _this.isError.status = true;
+        _this.isError.msg = err.response.data.msg;
+      });
+    }
+  }
+};
+exports.default = _default;
+        var $5b90e6 = exports.default || module.exports;
+      
+      if (typeof $5b90e6 === 'function') {
+        $5b90e6 = $5b90e6.options;
+      }
+    
+        /* template */
+        Object.assign($5b90e6, (function () {
+          var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "register-page" },
+    [
+      _c("h3", [_vm._v("Edit Your Profile")]),
+      _vm._v(" "),
+      _c("div", { attrs: { id: "form" } }, [
+        _c("div", { staticClass: "form-container" }, [
+          _c("div", { staticClass: "container" }, [
+            _c("div", { staticClass: "separator-div" }, [
+              _c(
+                "form",
+                {
+                  attrs: { id: "Edit-profile-form" },
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.updateProfile($event)
+                    }
+                  }
+                },
+                [
+                  _c("div", { attrs: { id: "name-Edit-profile-form" } }, [
+                    _c("label", { attrs: { for: "name" } }, [_vm._v("Name")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.user.name,
+                          expression: "user.name"
+                        }
+                      ],
+                      attrs: {
+                        type: "text",
+                        name: "name",
+                        id: "name-Edit-profile"
+                      },
+                      domProps: { value: _vm.user.name },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.user, "name", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { attrs: { id: "email-Edit-profile-form" } }, [
+                    _c("label", { attrs: { for: "email" } }, [_vm._v("Email")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.user.email,
+                          expression: "user.email"
+                        }
+                      ],
+                      attrs: {
+                        type: "email",
+                        name: "email",
+                        id: "email-Edit-profile"
+                      },
+                      domProps: { value: _vm.user.email },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.user, "email", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { attrs: { id: "password-Edit-profile-form" } }, [
+                    _c("label", { attrs: { for: "password" } }, [
+                      _vm._v("Password")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.user.password,
+                          expression: "user.password"
+                        }
+                      ],
+                      attrs: {
+                        type: "text",
+                        name: "password",
+                        id: "password-Edit-profile"
+                      },
+                      domProps: { value: _vm.user.password },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.user, "password", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(0)
+                ]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "my-btn" }, [
+            _c(
+              "button",
+              {
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.cancel($event)
+                  }
+                }
+              },
+              [_vm._v("Cancel")]
+            )
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _vm.isError.status
+        ? _c("Alert", { attrs: { isError: _vm.isError } })
+        : _vm._e()
+    ],
+    1
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "my-btn" }, [
+      _c("button", { attrs: { type: "submit" } }, [_vm._v("Edit-profile")])
+    ])
+  }
+]
+render._withStripped = true
+
+          return {
+            render: render,
+            staticRenderFns: staticRenderFns,
+            _compiled: true,
+            _scopeId: null,
+            functional: undefined
+          };
+        })());
+      
+    /* hot reload */
+    (function () {
+      if (module.hot) {
+        var api = require('vue-hot-reload-api');
+        api.install(require('vue'));
+        if (api.compatible) {
+          module.hot.accept();
+          if (!module.hot.data) {
+            api.createRecord('$5b90e6', $5b90e6);
+          } else {
+            api.reload('$5b90e6', $5b90e6);
+          }
+        }
+
+        
+        var reloadCSS = require('_css_loader');
+        module.hot.dispose(reloadCSS);
+        module.hot.accept(reloadCSS);
+      
+      }
+    })();
 },{"axios":"node_modules/axios/index.js","../components/alert":"src/components/alert.vue","_css_loader":"../../../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/main.vue":[function(require,module,exports) {
 "use strict";
 
@@ -12091,6 +12388,8 @@ var _axios = _interopRequireDefault(require("axios"));
 var _add = _interopRequireDefault(require("./add"));
 
 var _edit = _interopRequireDefault(require("./edit"));
+
+var _editProfile = _interopRequireDefault(require("./editProfile"));
 
 var _alert = _interopRequireDefault(require("./alert"));
 
@@ -12197,7 +12496,8 @@ var _default = {
   components: {
     Add: _add.default,
     Edit: _edit.default,
-    Alert: _alert.default
+    Alert: _alert.default,
+    EditProfile: _editProfile.default
   },
   data: function data() {
     return {
@@ -12213,6 +12513,7 @@ var _default = {
       tasks4: [],
       isAdd: false,
       isEdit: false,
+      isProfile: false,
       isError: {
         status: false,
         msg: ""
@@ -12233,6 +12534,10 @@ var _default = {
     //   });
   },
   methods: {
+    afterprofile: function afterprofile(payload) {
+      this.isProfile = payload;
+      this.getAll();
+    },
     afterAdd: function afterAdd(payload) {
       this.isAdd = payload;
       this.getAll();
@@ -12802,7 +13107,7 @@ render._withStripped = true
       
       }
     })();
-},{"axios":"node_modules/axios/index.js","./add":"src/components/add.vue","./edit":"src/components/edit.vue","./alert":"src/components/alert.vue","_css_loader":"../../../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/App.vue":[function(require,module,exports) {
+},{"axios":"node_modules/axios/index.js","./add":"src/components/add.vue","./edit":"src/components/edit.vue","./editProfile":"src/components/editProfile.vue","./alert":"src/components/alert.vue","_css_loader":"../../../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/App.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -12820,8 +13125,11 @@ var _register = _interopRequireDefault(require("../src/components/register"));
 
 var _main = _interopRequireDefault(require("../src/components/main"));
 
+var _editProfile = _interopRequireDefault(require("../src/components/editProfile"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+//
 //
 //
 //
@@ -12843,11 +13151,12 @@ var _default = {
     Alert: _alert.default,
     Login: _login.default,
     Register: _register.default,
+    EditProfile: _editProfile.default,
     Main: _main.default
   },
   data: function data() {
     return {
-      isprofile: false,
+      isProfile: false,
       isRegister: false,
       isEdit: false,
       isAdd: false,
@@ -12861,6 +13170,10 @@ var _default = {
     };
   },
   methods: {
+    afterProfile: function afterProfile() {
+      this.login = true;
+      this.isProfile = false;
+    },
     showEdit: function showEdit(id) {
       var _this = this;
 
@@ -12878,7 +13191,13 @@ var _default = {
         _this.isError.msg = err.msg.join("\n");
       });
     },
-    showMain: function showMain() {},
+    showEditProfile: function showEditProfile() {
+      this.isProfile = true;
+      this.isRegister = false;
+      this.isLogin = true;
+      this.isEdit = false;
+      this.isAdd = false;
+    },
     showAddForm: function showAddForm() {
       this.isRegister = false;
       this.isLogin = false;
@@ -12938,7 +13257,9 @@ exports.default = _default;
     "div",
     [
       _vm.isLogin
-        ? _c("Navbar", { on: { isLogin: _vm.showLoginForm } })
+        ? _c("Navbar", {
+            on: { isLogin: _vm.showLoginForm, isProfile: _vm.showEditProfile }
+          })
         : _vm._e(),
       _vm._v(" "),
       _vm.isError.status ? _c("Alert") : _vm._e(),
@@ -12947,13 +13268,15 @@ exports.default = _default;
         ? _c("Login", {
             on: { isLogin: _vm.showLoginForm, isRegister: _vm.showRegisterForm }
           })
+        : _vm.isProfile
+        ? _c("EditProfile", { on: { isProfile: _vm.afterProfile } })
         : _vm._e(),
       _vm._v(" "),
       _vm.isRegister
         ? _c("Register", { on: { isRegister: _vm.showLoginForm } })
         : _vm._e(),
       _vm._v(" "),
-      _vm.isLogin && !_vm.isEdit && !_vm.isAdd
+      !_vm.isProfile && _vm.isLogin && !_vm.isEdit && !_vm.isAdd
         ? _c("Main", { on: { isAdd: _vm.showAddForm } })
         : _vm._e(),
       _vm._v(" "),
@@ -13002,7 +13325,7 @@ render._withStripped = true
       
       }
     })();
-},{"../src/components/navbar":"src/components/navbar.vue","../src/components/alert":"src/components/alert.vue","../src/components/login":"src/components/login.vue","../src/components/register":"src/components/register.vue","../src/components/main":"src/components/main.vue","_css_loader":"../../../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"node_modules/vue-google-oauth2/index.js":[function(require,module,exports) {
+},{"../src/components/navbar":"src/components/navbar.vue","../src/components/alert":"src/components/alert.vue","../src/components/login":"src/components/login.vue","../src/components/register":"src/components/register.vue","../src/components/main":"src/components/main.vue","../src/components/editProfile":"src/components/editProfile.vue","_css_loader":"../../../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"node_modules/vue-google-oauth2/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

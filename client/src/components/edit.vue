@@ -30,57 +30,58 @@
           </div>
         </form>
       </div>
-      <div class="chg-category">
-        
-      </div>
+      <button @click="cancel">cancel</button>
     </div>
-    <Alert v-if="isError.status" :isError="isError" ></Alert>
+    <Alert v-if="isError.status" :isError="isError"></Alert>
   </div>
 </template>
         
 <script>
-  import axios from "axios";
-  import Alert from '../components/alert'
-  const url = "http://localhost:3000";
+import axios from "axios";
+import Alert from "../components/alert";
+const url = "http://localhost:3000";
 
-  export default {
-    name:'Edit',
-    components:{
-      Alert
-    },
-    props:['task'],
-    data(){
-      return {
-        isError:{
-          status:false,
-          msg:[]
-        },
+export default {
+  name: "Edit",
+  components: {
+    Alert
+  },
+  props: ["task"],
+  data() {
+    return {
+      isError: {
+        status: false,
+        msg: []
       }
-    },
-    methods: {
-      editData(id){
-        axios({
-          url:`${url}/tasks/${id}`,
-          method:'put',
-          headers:{
-            access_token:localStorage.access_token
-          },
-          data:{
-            title:this.task.title,
-            description:this.task.description,
-            category:this.task.category,
-          }
-        }).then(data =>{
-          this.$emit('editted',false)
-        }).catch(err =>{
-          this.isError.status=true
-          this.isError.msg=err.response.data.msg.join(` and `)
+    };
+  },
+  methods: {
+    editData(id) {
+      axios({
+        url: `${url}/tasks/${id}`,
+        method: "put",
+        headers: {
+          access_token: localStorage.access_token
+        },
+        data: {
+          title: this.task.title,
+          description: this.task.description,
+          category: this.task.category
+        }
+      })
+        .then(data => {
+          this.$emit("editted", false);
         })
-      },
-      
-      
-    }
-  };
+        .catch(err => {
+          this.isError.status = true;
+          this.isError.msg = err.response.data.msg.join(` and `);
+        });
+    },
+    cancel(){
+      this.$emit('editted',false)
+    },
+  }
+};
 </script>
         
 <style>

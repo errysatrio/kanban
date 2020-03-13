@@ -31,14 +31,12 @@ data () {
                 url:`${url}/user/GoogleLogin`,
                 method:'post',
                 data:{
-                    token:google_token
+                  token:google_token
                 }
-            }).then(({data}) =>{
-                console.log(data,'<<<<<< data dari google')
+            }).then( data => {
                 localStorage.setItem('access_token', data.data.access_token)
                 this.$emit('isLogin',true)
             }).catch(err =>{
-                console.log('err') 
                 console.log(err)
             })
             // console.log('user', google_token.access_token)

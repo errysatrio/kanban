@@ -1,0 +1,243 @@
+body {
+    margin: 0;
+    height: 100vh;
+    color: #6B9080
+}
+
+a {
+    outline: none;    
+    text-decoration: none;
+    color: #6B9080;
+}
+
+.nav-opt{
+    border: 3px solid #6B9080;
+    background-color: #CCE3DE;
+    color: #6B9080;
+    padding: 13px;
+    outline: none;    
+    text-decoration: none;
+    border-radius:8px ;
+}
+
+footer {
+    position: fixed;
+    display: flex;
+    width: 100%;
+    margin: 0px;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    background-color: #A4C3B2;
+    bottom: 0;
+    color: rgb(54, 95, 77);
+}
+
+
+button {
+    border-radius: 5px;
+    background-color: #CCE3DE;
+    border-color: #6B9080;
+    color: #6B9080;
+}
+
+
+input {
+    border: 5px solid #6B9080;
+    border-radius: 10px;
+    background-color: #CCE3DE;
+}
+
+label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.layer {
+    position: fixed;
+    z-index: -5;
+    margin-top: -8px;
+    margin: -8px;
+    opacity:100% ; 
+    height: 100% ;
+    width: 100%;
+}
+
+.navbar {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    position: fixed;
+    z-index: 1;
+    padding: 15px;
+    top: 0;
+    /* margin-right: 15px; */
+    background-color: #A4C3B2;
+}
+
+.my-btn {
+    margin: 10px;
+    display: flex; 
+    justify-content: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    color: #6B9080;
+    box-shadow: black;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+}
+
+.add-btn{
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+    margin-bottom: 30px;
+    padding: 30px;
+}
+
+.container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    overflow-x: auto;
+    margin-bottom: 10px;
+    box-shadow: black;
+}
+
+.card { 
+    align-content: center;
+    padding: 10px;
+    padding-bottom: 5px;
+}
+
+.category {
+    width: 20%;
+    border:  2px solid #6B9080;
+    border-radius: 10px;
+    box-shadow: black;
+    border-radius: 10px;
+    color: #6B9080;
+    padding: 5px;
+    height: 60vh;
+    text-align: center;
+    overflow-x: auto;
+}
+
+.signout {
+    margin-right: 20px;
+    border: 3px solid #6B9080;
+    background-color: #CCE3DE;
+    color: #6B9080;
+    padding: 13px;
+    outline: none;    
+    text-decoration: none;
+    border-radius:8px ;
+}
+
+.alert {
+    background-color: rgb(211, 0, 0);
+    border: 2px solid #6B9080 ;
+    opacity: 80%;
+    border-radius: 10px;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    margin-top: 20vh;
+    z-index: 8;
+}
+
+.task {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: space-between;
+    align-content: center;
+    border: 3px solid #6B9080;
+    border-radius: 10px;
+    box-shadow: black;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    overflow-y: auto;
+}
+
+
+.login-page {
+    display: flex ;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    position: relative;
+    margin-top: 10vh;
+}
+
+.register-page {
+    display: flex ;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    position: relative;
+    margin-top: 10vh;
+}
+
+.add-page {
+    display: flex ;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    position: relative;
+    margin-top: 10vh;
+}
+
+.edit-page {
+    display: flex ;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    position: relative;
+    margin-top: 10vh;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    width: 50vh;
+    background-color: #A4C3B2 ;
+    border: 3px solid #6B9080;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.to-register-btn {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+i {
+    box-shadow: black;
+    padding: 10px;
+    border: 3px solid #6B9080;
+    border-radius: 100%;
+}
+
+/*# sourceMappingURL=style.css.map */

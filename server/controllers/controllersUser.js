@@ -19,8 +19,6 @@ class ControllerUser {
         })
         .then(ticket => {
             payload = ticket.getPayload();
-            console.log(payload,'============ini paload')
-            console.log(ticket,'============ini ticket')
             return User.findOne({where:{email:payload.email}})
         }).then(data=>{
             // console.log(data)
@@ -75,6 +73,18 @@ class ControllerUser {
                 console.log(err.msg)
                 next(err)
             })
+    }
+
+    static editProfile(req,res,next){
+        const {email, name, password} = req.body
+        User.update({email,name,password})
+        .then(data =>{
+            console.log(data)
+            
+        })
+        .catch(err =>{
+            console.log(err)
+        })
     }
 }
 module.exports = ControllerUser    

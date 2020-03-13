@@ -38,7 +38,9 @@
     import axios from "axios";
     import Alert from '../components/alert'
 
-    const url = 'http://localhost:3000'
+    // const url = 'http://localhost:3000'
+const url = 'https://kanban-serve.herokuapp.com'
+
     export default {
         name:'Register',
         components:{

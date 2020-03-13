@@ -100,7 +100,9 @@ import Edit from "./edit";
 import EditProfile from './editProfile'
 import Alert from "./alert";
 
-const url = "http://localhost:3000";
+// const url = "http://localhost:3000";
+const url = 'https://kanban-serve.herokuapp.com'
+
 export default {
   name: "Main",
   components: {

@@ -34,6 +34,7 @@
 import axios from 'axios'
 import Alert from '../components/alert'
 import GSign from '../components/GSignIn'
+const url = 'https://kanban-serve.herokuapp.com'
 
     export default {
         name:'Login',
@@ -60,7 +61,7 @@ import GSign from '../components/GSignIn'
             },
             login() {
                 axios({
-                    url: `http://localhost:3000/user/login`,
+                    url: `${url}/user/login`,
                     method: 'post',
                     data: {
                         email: this.user.email,

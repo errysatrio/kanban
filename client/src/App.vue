@@ -20,7 +20,7 @@ import Register from "../src/components/register";
 import Main from "../src/components/main";
 import EditProfile from '../src/components/editProfile'
 
-const url = 'http://localhost:3000'
+const url = 'https://kanban-serve.herokuapp.com'
 
 export default {
   name: "App",

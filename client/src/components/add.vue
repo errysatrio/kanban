@@ -39,6 +39,7 @@
 <script>
 import axios from "axios";
 import Alert from '../components/alert'
+const url = 'https://kanban-serve.herokuapp.com'
 
 export default {
   name: "Add",
@@ -63,7 +64,7 @@ export default {
       console.log(this.task);
       // console.log(localStorage.access_token);
       axios({
-        url: `http://localhost:3000/tasks`,
+        url: `${url}/tasks`,
         method: "post",
         headers: {
           access_token: localStorage.access_token

@@ -7,7 +7,9 @@
 
 <script>
 import Axios from 'axios'
-const url = 'http://localhost:3000'
+// const url = 'http://localhost:3000'
+const url = 'https://kanban-serve.herokuapp.com'
+
 export default {
 data () {
     return {

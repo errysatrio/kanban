@@ -12669,6 +12669,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 var url = "http://localhost:3000"; // const url = 'https://kanban-serve.herokuapp.com'
 
 var _default = {
@@ -12701,10 +12709,10 @@ var _default = {
         name: 'Done'
       }],
       tasks: {
+        tasks0: [],
         tasks1: [],
         tasks2: [],
-        tasks3: [],
-        tasks4: []
+        tasks3: []
       },
       isAdd: false,
       isEdit: false,
@@ -12898,55 +12906,63 @@ exports.default = _default;
               )
             ]),
             _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "container" },
-              [
-                _c(
-                  "Category",
-                  {
+            _c("div", { staticClass: "category-container" }, [
+              _c(
+                "div",
+                { staticClass: "container" },
+                [
+                  _c("Category", {
                     attrs: {
                       category: _vm.categories[0],
                       tasks: _vm.tasks.tasks1
                     }
-                  },
-                  [
-                    _c(
-                      "Category",
-                      {
-                        attrs: {
-                          category: _vm.categories[1],
-                          tasks: _vm.tasks.tasks2
-                        }
-                      },
-                      [
-                        _c(
-                          "Category",
-                          {
-                            attrs: {
-                              category: _vm.categories[2],
-                              tasks: _vm.tasks.tasks3
-                            }
-                          },
-                          [
-                            _c("Category", {
-                              attrs: {
-                                category: _vm.categories[3],
-                                tasks: _vm.tasks.tasks4
-                              }
-                            })
-                          ],
-                          1
-                        )
-                      ],
-                      1
-                    )
-                  ],
-                  1
-                )
-              ],
-              1
-            )
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "container" },
+                [
+                  _c("Category", {
+                    attrs: {
+                      category: _vm.categories[1],
+                      tasks: _vm.tasks.tasks2
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "container" },
+                [
+                  _c("Category", {
+                    attrs: {
+                      category: _vm.categories[2],
+                      tasks: _vm.tasks.tasks3
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "container" },
+                [
+                  _c("Category", {
+                    attrs: {
+                      category: _vm.categories[3],
+                      tasks: _vm.tasks.tasks4
+                    }
+                  })
+                ],
+                1
+              )
+            ])
           ])
         : _vm._e()
     ],
@@ -13417,7 +13433,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38199" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40341" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

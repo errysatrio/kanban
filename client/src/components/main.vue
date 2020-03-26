@@ -10,11 +10,19 @@
       <div class="add-btn">
         <button @click="isAdd=!isAdd">Add Task</button>
       </div>
-      <div class="container">
-        <Category :category="categories[0]" :tasks="tasks.tasks1"/>
-        <Category :category="categories[1]" :tasks="tasks.tasks2"/>
-        <Category :category="categories[2]" :tasks="tasks.tasks3"/>
-        <Category :category="categories[3]" :tasks="tasks.tasks4"/>
+      <div class="category-container">
+        <div class="container">
+          <Category :category="categories[0]" :tasks="tasks.tasks1"/>
+        </div>
+        <div class="container">
+          <Category :category="categories[1]" :tasks="tasks.tasks2"/>
+        </div>
+        <div class="container">
+          <Category :category="categories[2]" :tasks="tasks.tasks3"/>
+        </div>
+        <div class="container">
+          <Category :category="categories[3]" :tasks="tasks.tasks4"/>
+        </div>
       </div>
     </div>
 </template>
@@ -63,10 +71,10 @@ export default {
           name: 'Done'
         }],
       tasks: {
+        tasks0: [],
         tasks1: [],
         tasks2: [],
-        tasks3: [],
-        tasks4: []
+        tasks3: []
       },
       isAdd: false,
       isEdit: false,
@@ -205,4 +213,9 @@ export default {
 </script>
 
 <style>
+.category-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
 </style>

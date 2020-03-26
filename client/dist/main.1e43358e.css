@@ -10,3 +10,8 @@
   color: #fff;
   box-shadow: 0 3px 0 #0f69ff;
 }
+.category-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}

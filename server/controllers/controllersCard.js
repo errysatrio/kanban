@@ -1,6 +1,7 @@
 'use strict'
 
 const { Card, Category, User } = require('../models')
+// const io = require('socket.io')
 
 class ControllerTask {
     static getAll(req, res, next) {
@@ -32,6 +33,7 @@ class ControllerTask {
         let id = Number(req.params.id)
         Promise.all([Card.update({ title, description, category }, { where: { id } }), Card.findByPk(id)])
             .then(data => {
+                req.io.emit('io',   )
                 res.status(200).json(data[1])
             })
             .catch(err => {

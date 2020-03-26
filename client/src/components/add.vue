@@ -80,7 +80,7 @@ export default {
         })
         .catch(err => {
           // console.log(err);
-          this.isError.msg = err.response.data.msg.join(' and ');
+          this.isError.msg = err.response.data.msg;
           this.isError.status = true;
         });
     },

@@ -11,101 +11,29 @@
         <button @click="isAdd=!isAdd">Add Task</button>
       </div>
       <div class="container">
-        <div class="category">
-          <div class="card">
-            <h3>Back Log</h3>
-            <div class="category-separator">
-              <div v-for="todo in tasks1" :key="todo.id" class="task">
-                <a v-if="todo.category === 0  ? false : true" @click.prevent="decreaseCategory(todo)" href="#">
-                  <i class="fas fa-backward"></i>
-                </a>
-                <a @click.prevent="showEdit(todo.id)" @editted="afteredit" href>
-                      {{ todo.title }}
-                </a>
-                <a v-if="todo.category === 3 ? false : true" @click.prevent="addCategory(todo)" href="#">
-                  <i class="fas fa-forward"></i>
-                </a>
-                <a v-if="todo.category !== 3 ? false : true" @click.prevent="deleteCategory(todo.id)" href="#">
-                  <i class="fas fa-trash-alt"></i>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="category">
-          <div class="card">
-            <h3>To Do</h3>
-            <div v-for="todo in tasks2" :key="todo.id" class="task">
-                <a v-if="todo.category === 0  ? false : true" @click.prevent="decreaseCategory(todo)" href="#">
-                  <i class="fas fa-backward"></i>
-                </a>
-                <a @click.prevent="showEdit(todo.id)" @editted="afteredit" href>
-                  {{ todo.title }}
-                </a>
-                <a v-if="todo.category === 3 ? false : true" @click.prevent="addCategory(todo)" href="#">
-                  <i class="fas fa-forward"></i>
-                </a>
-                <a v-if="todo.category !== 3 ? false : true" @click.prevent="deleteCategory(todo.id)" href="#">
-                  <i class="fas fa-trash-alt"></i>
-                </a>
-              </div>
-          </div>
-        </div>
-        <div class="category">
-          <div class="card">
-            <h3>Doing</h3>
-              <div v-for="todo in tasks3" :key="todo.id" class="task">
-                <a v-if="todo.category === 0  ? false : true" @click.prevent="decreaseCategory(todo)" href="#">
-                  <i class="fas fa-backward"></i>
-                </a>
-                <a @click.prevent="showEdit(todo.id)" @editted="afteredit" href>
-                      {{ todo.title }}
-                </a>
-                <a v-if="todo.category === 3 ? false : true" @click.prevent="addCategory(todo)" href="#">
-                  <i class="fas fa-forward"></i>
-                </a>
-                <a v-if="todo.category !== 3 ? false : true" @click.prevent="deleteCategory(todo.id)" href="#">
-                  <i class="fas fa-trash-alt"></i>
-                </a>
-              </div>
-          </div>
-        </div>
-        <div class="category">
-          <div class="card">
-            <h3>Done</h3>
-            <div v-for="todo in tasks4" :key="todo.id" class="task">
-                <a v-if="todo.category === 0  ? false : true" @click.prevent="decreaseCategory(todo)" href="#">
-                  <i class="fas fa-backward"></i>
-                </a>
-                <a @click.prevent="showEdit(todo.id)" @editted="afteredit" href>
-                      {{ todo.title }}
-                </a>
-                <a v-if="todo.category === 3 ? false : true" @click.prevent="addCategory(todo)" href="#">
-                  <i class="fas fa-forward"></i>
-                </a>
-                <a v-if="todo.category !== 3 ? false : true" @click.prevent="deleteCategory(todo.id)" href="#">
-                  <i class="fas fa-trash-alt"></i>
-                </a>
-              </div>
-        </div>
+        <Category :category="categories[0]" :tasks="tasks.tasks1"/>
+        <Category :category="categories[1]" :tasks="tasks.tasks2"/>
+        <Category :category="categories[2]" :tasks="tasks.tasks3"/>
+        <Category :category="categories[3]" :tasks="tasks.tasks4"/>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
 import axios from "axios";
 import Add from "./add";
 import Edit from "./edit";
-import EditProfile from './editProfile'
+import EditProfile from './editProfile';
 import Alert from "./alert";
+import Category from '../components/category'
 
-// const url = "http://localhost:3000";
-const url = 'https://kanban-serve.herokuapp.com'
+const url = "http://localhost:3000";
+// const url = 'https://kanban-serve.herokuapp.com'
 
 export default {
   name: "Main",
   components: {
+    Category,
     Add,
     Edit,
     Alert,
@@ -116,13 +44,30 @@ export default {
       task: {
         id: 0,
         title: "",
-        description: "",
-        category: 0
+        description: ""
+        },
+        categories: [{
+          id: 0,
+          name: 'Back Log'
+        },
+        {
+          id: 1,
+          name: 'To Do'
+        },
+        {
+          id: 2,
+          name: 'Doing'
+        },
+        {
+          id: 3,
+          name: 'Done'
+        }],
+      tasks: {
+        tasks1: [],
+        tasks2: [],
+        tasks3: [],
+        tasks4: []
       },
-      tasks1: [],
-      tasks2: [],
-      tasks3: [],
-      tasks4: [],
       isAdd: false,
       isEdit: false,
       isProfile:false,
@@ -134,17 +79,6 @@ export default {
   },
   created() {
     this.getAll();
-    // axios({
-    //     url: `${url}/tasks`,
-    //     method: "get",
-    //     headers: {
-    //       access_token: localStorage.access_token
-    //     }
-    //   }).then(data => {
-    //     console.log(data)
-    //     data.data.filter(el=> el.category===0)
-    //     this.tasks1 = data.data
-    //   });
   },
   methods: {
     afterprofile(payload){
@@ -167,13 +101,16 @@ export default {
           access_token: localStorage.access_token
         }
       }).then(data => {
-        console.log(data.data);
         this.isAdd = false;
-        this.tasks1 = data.data.filter(el => el.category === 0);
-        this.tasks2 = data.data.filter(el => el.category === 1);
-        this.tasks3 = data.data.filter(el => el.category === 2);
-        this.tasks4 = data.data.filter(el => el.category === 3);
-      });
+        this.tasks.tasks1 = data.data.filter(el => el.category === 0);
+        this.tasks.tasks2 = data.data.filter(el => el.category === 1);
+        this.tasks.tasks3 = data.data.filter(el => el.category === 2);
+        this.tasks.tasks4 = data.data.filter(el => el.category === 3);
+      })
+      .catch(err => {
+        this.isError.status = true
+        this.isError.msg = err.response.data.msg
+      })
     },
     showAdd() {
       this.$emit("isAdd", true);
@@ -194,7 +131,8 @@ export default {
           this.task.category = data.data.category;
         })
         .catch(err => {
-          console.log(err);
+          this.isError.status = true
+          this.isError.msg = err.response.data.msg
         });
     },
     showEdit(id) {
@@ -220,7 +158,8 @@ export default {
           this.getAll()
         })
         .catch(err => {
-          console.log(err);
+          this.isError.status = true
+          this.isError.msg = err.response.data.msg
         });
     },
     decreaseCategory(obj) {
@@ -242,7 +181,8 @@ export default {
           this.getAll()
         })
         .catch(err => {
-          console.log(err);
+          this.isError.status = true
+          this.isError.msg = err.response.data.msg
         });
     },
     deleteCategory(id){
@@ -256,7 +196,8 @@ export default {
         }).then(data =>{
           this.getAll()
         }).catch(err =>{
-          console.log(err)
+          this.isError.status = true
+          this.isError.msg = err.response.data.msg.join(', ')
         })
       }
   }
